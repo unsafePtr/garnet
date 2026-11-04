@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793828237839,
+  "lastUpdate": 1793828249057,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -765215,54 +765215,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "matrembl@microsoft.com",
-            "name": "Mathieu Tremblay",
-            "username": "Mathos1432"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "a4f07ccebcae4b957a0de18c82d9fd0e0f9ab497",
-          "message": "[Tests] Fix migration test race caused by uninitialized configuration epochs (#2248)\n\n* [Cluster] Preserve importing slots during same-source gossip\n\nKeep local importing state when its current source repeats a stable ownership claim. Cover epoch-zero gossip, positive epochs, newer-owner replacement and the reproduced migration race.\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n* [Tests] Initialize cluster configuration epochs before meet\n\nAssign each separate-endpoint test node a distinct positive configuration epoch before CLUSTER MEET, matching documented initialization. Remove the production guard and tests based on uninitialized migration state.\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n---------\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19",
-          "timestamp": "2026-10-15T10:46:34-07:00",
-          "tree_id": "f270ace3dde152d45359aa3fa828c388fad04846",
-          "url": "https://github.com/microsoft/garnet/commit/a4f07ccebcae4b957a0de18c82d9fd0e0f9ab497"
-        },
-        "date": 1792086674223,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: AAD)",
-            "value": 10862.127583821615,
-            "unit": "ns",
-            "range": "± 157.66481864323052"
-          },
-          {
-            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: ACL)",
-            "value": 11156.807047526041,
-            "unit": "ns",
-            "range": "± 107.39354850115387"
-          },
-          {
-            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: AOF)",
-            "value": 11153.204236711774,
-            "unit": "ns",
-            "range": "± 99.76928835826617"
-          },
-          {
-            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: None)",
-            "value": 11179.545389811197,
-            "unit": "ns",
-            "range": "± 82.20558317309404"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "napoli.tiago96@gmail.com",
             "name": "Tiago Nápoli",
             "username": "tiagonapoli"
@@ -767609,6 +767561,54 @@ window.BENCHMARK_DATA = {
             "value": 12377.549525669643,
             "unit": "ns",
             "range": "± 55.06797743566911"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "58e2f900050db0b7fb792cc97edd4affa22ef6cc",
+          "message": "only incldue Garnet.Diagnostic reference in .csproj projects (#2355)",
+          "timestamp": "2026-11-04T16:31:13-05:00",
+          "tree_id": "2f537562b2b37f99ed5e49b32f52ee34449ca580",
+          "url": "https://github.com/microsoft/garnet/commit/58e2f900050db0b7fb792cc97edd4affa22ef6cc"
+        },
+        "date": 1793828196331,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: AAD)",
+            "value": 12392.84439086914,
+            "unit": "ns",
+            "range": "± 93.76229207383753"
+          },
+          {
+            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: ACL)",
+            "value": 12513.907979329428,
+            "unit": "ns",
+            "range": "± 102.06425475273247"
+          },
+          {
+            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: AOF)",
+            "value": 12509.433201381138,
+            "unit": "ns",
+            "range": "± 78.32207299505573"
+          },
+          {
+            "name": "BDN.benchmark.Operations.PubSubOperations.Publish(Params: None)",
+            "value": 12618.243517194476,
+            "unit": "ns",
+            "range": "± 49.32113195725292"
           }
         ]
       }
