@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793828623028,
+  "lastUpdate": 1793828633183,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -785323,36 +785323,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "matrembl@microsoft.com",
-            "name": "Mathieu Tremblay",
-            "username": "Mathos1432"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "a4f07ccebcae4b957a0de18c82d9fd0e0f9ab497",
-          "message": "[Tests] Fix migration test race caused by uninitialized configuration epochs (#2248)\n\n* [Cluster] Preserve importing slots during same-source gossip\n\nKeep local importing state when its current source repeats a stable ownership claim. Cover epoch-zero gossip, positive epochs, newer-owner replacement and the reproduced migration race.\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n* [Tests] Initialize cluster configuration epochs before meet\n\nAssign each separate-endpoint test node a distinct positive configuration epoch before CLUSTER MEET, matching documented initialization. Remove the production guard and tests based on uninitialized migration state.\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n---------\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19",
-          "timestamp": "2026-10-15T10:46:34-07:00",
-          "tree_id": "f270ace3dde152d45359aa3fa828c388fad04846",
-          "url": "https://github.com/microsoft/garnet/commit/a4f07ccebcae4b957a0de18c82d9fd0e0f9ab497"
-        },
-        "date": 1792086690426,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Network.BasicOperations.InlinePing(Params: None)",
-            "value": 83.07876495214609,
-            "unit": "ns",
-            "range": "± 0.5408402236264575"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "napoli.tiago96@gmail.com",
             "name": "Tiago Nápoli",
             "username": "tiagonapoli"
@@ -786817,6 +786787,36 @@ window.BENCHMARK_DATA = {
             "value": 86.05958263079326,
             "unit": "ns",
             "range": "± 0.6272517869491155"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a76861365c55ca66b76c53ca11b1f766b668e953",
+          "message": "bump to 2.2.7 (#2356)",
+          "timestamp": "2026-11-04T13:40:23-08:00",
+          "tree_id": "266f026de284a96331e45c5b9d2850f635230d3e",
+          "url": "https://github.com/microsoft/garnet/commit/a76861365c55ca66b76c53ca11b1f766b668e953"
+        },
+        "date": 1793828599396,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Network.BasicOperations.InlinePing(Params: None)",
+            "value": 61.260788257305435,
+            "unit": "ns",
+            "range": "± 0.6135038123767376"
           }
         ]
       }
