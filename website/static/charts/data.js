@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793807454419,
+  "lastUpdate": 1793807465093,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -786825,54 +786825,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "simonn@microsoft.com",
-            "name": "Simon Nattress",
-            "username": "nattress"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "44cf0bdb7d36d1589accb50986ca6171b6dea0eb",
-          "message": "Use the approved global Microsoft privacy link (#2240)\n\nReplace the documentation sidebar's US-specific privacy statement URL with\nhttps://go.microsoft.com/fwlink/?LinkId=521839, matching the URL prescribed\nby Microsoft ComplianceWeb and already used in the website footer.",
-          "timestamp": "2026-10-13T11:57:45-07:00",
-          "tree_id": "fa4e9843b34db69e8a68b611472c8fc91618c16d",
-          "url": "https://github.com/microsoft/garnet/commit/44cf0bdb7d36d1589accb50986ca6171b6dea0eb"
-        },
-        "date": 1791918177090,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: AAD)",
-            "value": 43305.380045572914,
-            "unit": "ns",
-            "range": "± 329.16590560788603"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: ACL)",
-            "value": 42146.209716796875,
-            "unit": "ns",
-            "range": "± 248.60898465629543"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: AOF)",
-            "value": 69050.55926287615,
-            "unit": "ns",
-            "range": "± 1767.8590876094697"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: None)",
-            "value": 43475.118001302086,
-            "unit": "ns",
-            "range": "± 277.71774973504176"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "matrembl@microsoft.com",
             "name": "Mathieu Tremblay",
             "username": "Mathos1432"
@@ -789219,6 +789171,54 @@ window.BENCHMARK_DATA = {
             "value": 23254.3056640625,
             "unit": "ns",
             "range": "± 618.7892420600732"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d86c871792b9e4cc37c453a7bd5e8d3e1c8122c4",
+          "message": "Split `XVIMPORT FINISH` into `XVIMPORT VERIFY` and `XVIMPORT FINISH` (#2306)\n\n* bump diskann-garnet, add new exports\n\n* first pass at splitting xvimport finish into two options; only finish is actually routed at the moment\n\n* start on a failing test for imports\n\n* a number of fixes for broken up import commands\n\n* validate new xvimport options\n\n* issue verifications in existing tests\n\n* add a replica test for the new xvimport + verify + finish workflow\n\n* update XVIMPORT docs\n\n* address feedback\n\n* formatting\n\n* rework VINFO to indicate if an import has failed; failing test for replication of failed imports\n\n* fixes for replication of failed import state for Vector Sets\n\n* update docs\n\n* more doc correction",
+          "timestamp": "2026-11-04T10:46:29-05:00",
+          "tree_id": "20d67466b56a01f52a815363b795afebf1adba00",
+          "url": "https://github.com/microsoft/garnet/commit/d86c871792b9e4cc37c453a7bd5e8d3e1c8122c4"
+        },
+        "date": 1793807447307,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: AAD)",
+            "value": 32612.66831618089,
+            "unit": "ns",
+            "range": "± 240.07218184489076"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: ACL)",
+            "value": 31268.798014322918,
+            "unit": "ns",
+            "range": "± 225.25727044976242"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: AOF)",
+            "value": 45149.19913155692,
+            "unit": "ns",
+            "range": "± 186.92342226253592"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ObjectOperations.LPushPop(Params: None)",
+            "value": 31471.765950520832,
+            "unit": "ns",
+            "range": "± 306.2170422873276"
           }
         ]
       }
