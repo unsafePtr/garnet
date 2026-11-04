@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793829448572,
+  "lastUpdate": 1793829552595,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -833343,174 +833343,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "napoli.tiago96@gmail.com",
-            "name": "Tiago Nápoli",
-            "username": "tiagonapoli"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "48d6d6adf19ea320319b77faf7a7a58e6296dad8",
-          "message": "Prevent AOF writes during diskless checkpoint streaming (#2252)\n\n* Avoid AOF writes during diskless checkpoint replay\n\nApply streamed checkpoint records through the AOF processor replay session, which shares the store but disables AOF recording. Assert the replica AOF tail is unchanged while a checkpoint record is applied.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Test Vector Set checkpoint imports do not write AOF\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Assert Vector Set record types across replication, migration and recovery tests\n\nPort the record-type assertions from #111 so tests detect Vector Set indexes stored with the wrong record type.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Rename SetCheckpointRecord to ApplySnapshotRecord\n\nDiskless sync streams a snapshot, not a checkpoint, to the replica.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Skip diskless AOF regression tests at runtime outside Debug\n\nUse the existing exception-injection ignore helpers instead of compiling the tests out with #if DEBUG.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Drop redundant DEBUG guard around snapshot pause point\n\nPause points can only be enabled in Debug, so ResetAndWait is a no-op in Release.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Simplify diskless AOF regression tests\n\nUse MeetAndAssignSlots for cluster setup, a shared GetAofTailAddress helper, and a new disposable SuspendParkingScope so the pause/parking handshake no longer needs a flag and manual try/finally.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Check AOF tail after the entire diskless snapshot\n\nPause full-sync recovery before it resets the AOF addresses, so both regression tests compare the replica tail before and after the complete snapshot transfer rather than after one record.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Keep Vector Set record-type checks in shared validation helpers\n\nRemove scattered TYPE assertions from individual migration and recovery tests while retaining the record-type checks in VectorSetReplicationTestBase validation helpers.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Simplify diskless recovery test synchronization and type checks\n\nApply the recovery pause to full and partial sync. Release parked recovery explicitly within EnabledScope instead of globally suspending parking, and remove the unused suspension scope. Use TYPE in the shared Vector Set validation helper and remove the remaining standalone ad-hoc type assertions.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Remove duplicate Vector Set AOF test and explain recovery resume\n\nDrop VectorSetDisklessCheckpointDoesNotWriteToAof and retain the checkpoint-tail invariant test. Explain why re-enabling the injection flag resumes ResetAndWait rather than injecting another failure.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Use the fixture timeout for diskless snapshot arrival\n\nReplace the independent 30-second pause-arrival deadline with the existing 15-second fixture timeout.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n---------\n\nCo-authored-by: Tiago Napoli <tiagonapoli@microsoft.com>\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f",
-          "timestamp": "2026-10-15T19:05:26-07:00",
-          "tree_id": "e68b61fe5f67f9ece08573147ce6c60bbe28d097",
-          "url": "https://github.com/microsoft/garnet/commit/48d6d6adf19ea320319b77faf7a7a58e6296dad8"
-        },
-        "date": 1792117067689,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: AAD)",
-            "value": 15264.623587472099,
-            "unit": "ns",
-            "range": "± 267.1861718906084"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: AAD)",
-            "value": 20350.938138094814,
-            "unit": "ns",
-            "range": "± 494.443052392915"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: AAD)",
-            "value": 19869.94503245634,
-            "unit": "ns",
-            "range": "± 393.54470351705845"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: AAD)",
-            "value": 19125.096842447918,
-            "unit": "ns",
-            "range": "± 228.85188785327307"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: AAD)",
-            "value": 9597.894069126674,
-            "unit": "ns",
-            "range": "± 142.01669321192938"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: AAD)",
-            "value": 17901.809619721913,
-            "unit": "ns",
-            "range": "± 407.66992012145664"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: ACL)",
-            "value": 15410.706656319755,
-            "unit": "ns",
-            "range": "± 191.94924961003153"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: ACL)",
-            "value": 20224.475504557293,
-            "unit": "ns",
-            "range": "± 228.63595506334923"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: ACL)",
-            "value": 19122.308114858773,
-            "unit": "ns",
-            "range": "± 262.5267564577518"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: ACL)",
-            "value": 18934.07735188802,
-            "unit": "ns",
-            "range": "± 325.92595982130564"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: ACL)",
-            "value": 10549.758707682291,
-            "unit": "ns",
-            "range": "± 147.79835646601592"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: ACL)",
-            "value": 18440.25899251302,
-            "unit": "ns",
-            "range": "± 234.32944331154116"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: AOF)",
-            "value": 14957.724202473959,
-            "unit": "ns",
-            "range": "± 166.65961967915166"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: AOF)",
-            "value": 27622.971989558293,
-            "unit": "ns",
-            "range": "± 328.8892822427358"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: AOF)",
-            "value": 30393.62353515625,
-            "unit": "ns",
-            "range": "± 809.9992432997673"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: AOF)",
-            "value": 20330.35297393799,
-            "unit": "ns",
-            "range": "± 253.69004932366553"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: AOF)",
-            "value": 9237.118445502387,
-            "unit": "ns",
-            "range": "± 196.31132835358048"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: AOF)",
-            "value": 17614.130895278035,
-            "unit": "ns",
-            "range": "± 350.76075182017297"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: None)",
-            "value": 14960.216471354166,
-            "unit": "ns",
-            "range": "± 240.5776015041979"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: None)",
-            "value": 20771.76753452846,
-            "unit": "ns",
-            "range": "± 260.63307815558704"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: None)",
-            "value": 19484.237016950334,
-            "unit": "ns",
-            "range": "± 227.0313196105988"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: None)",
-            "value": 19305.48319498698,
-            "unit": "ns",
-            "range": "± 286.13528070279597"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: None)",
-            "value": 9389.586486816406,
-            "unit": "ns",
-            "range": "± 125.8103705926508"
-          },
-          {
-            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: None)",
-            "value": 17563.365071614582,
-            "unit": "ns",
-            "range": "± 322.0636317943738"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "jack@metajack.im",
             "name": "Jack Moffitt",
             "username": "metajack"
@@ -841737,6 +841569,174 @@ window.BENCHMARK_DATA = {
             "value": 22311.55504499163,
             "unit": "ns",
             "range": "± 197.47279056428863"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a76861365c55ca66b76c53ca11b1f766b668e953",
+          "message": "bump to 2.2.7 (#2356)",
+          "timestamp": "2026-11-04T13:40:23-08:00",
+          "tree_id": "266f026de284a96331e45c5b9d2850f635230d3e",
+          "url": "https://github.com/microsoft/garnet/commit/a76861365c55ca66b76c53ca11b1f766b668e953"
+        },
+        "date": 1793829519779,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: AAD)",
+            "value": 15163.805062430245,
+            "unit": "ns",
+            "range": "± 70.30922457315405"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: AAD)",
+            "value": 17954.38995361328,
+            "unit": "ns",
+            "range": "± 143.51410807131987"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: AAD)",
+            "value": 19392.681884765625,
+            "unit": "ns",
+            "range": "± 134.27116429975302"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: AAD)",
+            "value": 18027.544555664062,
+            "unit": "ns",
+            "range": "± 111.5842379996885"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: AAD)",
+            "value": 8490.345052083334,
+            "unit": "ns",
+            "range": "± 105.77495562322211"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: AAD)",
+            "value": 16051.717427571615,
+            "unit": "ns",
+            "range": "± 156.5028876908007"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: ACL)",
+            "value": 14183.79140218099,
+            "unit": "ns",
+            "range": "± 97.61798772195137"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: ACL)",
+            "value": 17646.20381673177,
+            "unit": "ns",
+            "range": "± 149.70535807796855"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: ACL)",
+            "value": 19091.24776204427,
+            "unit": "ns",
+            "range": "± 158.03353967494533"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: ACL)",
+            "value": 18225.430094401043,
+            "unit": "ns",
+            "range": "± 107.08743436271358"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: ACL)",
+            "value": 8181.257019042969,
+            "unit": "ns",
+            "range": "± 75.79020830713773"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: ACL)",
+            "value": 15448.184814453125,
+            "unit": "ns",
+            "range": "± 220.91011635047604"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: AOF)",
+            "value": 14067.023518880209,
+            "unit": "ns",
+            "range": "± 138.3387412785292"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: AOF)",
+            "value": 25630.40226527623,
+            "unit": "ns",
+            "range": "± 174.49053462333185"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: AOF)",
+            "value": 25555.587768554688,
+            "unit": "ns",
+            "range": "± 225.20151713766913"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: AOF)",
+            "value": 21263.448878696985,
+            "unit": "ns",
+            "range": "± 334.4848804043836"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: AOF)",
+            "value": 8079.200426737468,
+            "unit": "ns",
+            "range": "± 205.2057782995089"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: AOF)",
+            "value": 15826.094868977865,
+            "unit": "ns",
+            "range": "± 131.45202967677372"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringReadCommand(Params: None)",
+            "value": 14513.761099790916,
+            "unit": "ns",
+            "range": "± 710.1926552425274"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpRawStringRmwCommand(Params: None)",
+            "value": 17295.89090983073,
+            "unit": "ns",
+            "range": "± 113.51501614249779"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjRmwCommand(Params: None)",
+            "value": 18974.484252929688,
+            "unit": "ns",
+            "range": "± 114.13003434753897"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpObjReadCommand(Params: None)",
+            "value": 18059.968973795574,
+            "unit": "ns",
+            "range": "± 129.76028019801018"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpProc(Params: None)",
+            "value": 8160.868835449219,
+            "unit": "ns",
+            "range": "± 86.22415628581403"
+          },
+          {
+            "name": "BDN.benchmark.Operations.ModuleOperations.ModuleNoOpTxn(Params: None)",
+            "value": 15759.461059570312,
+            "unit": "ns",
+            "range": "± 175.95285651765766"
           }
         ]
       }
