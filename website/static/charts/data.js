@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793823608171,
+  "lastUpdate": 1793823619941,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -737907,210 +737907,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "badrishc@microsoft.com",
-            "name": "Badrish Chandramouli",
-            "username": "badrishc"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "8bc60763caaf72e91a36872e64cdbf6fb14e2c59",
-          "message": "[Tsavorite] Account hash index memory in the log budget and bound overflow buckets (#2229)\n\n* Charge unbudgeted hash-index memory against the log budget\n\nA Garnet node's resident memory grows with record count, independent of\nrecord size, and is bounded by no configured limit. LogSizeTracker budgets\nonly the hybrid log's pages and heap, so hash-index memory sits outside\nevery memory setting. IndexMemorySize and IndexMaxMemorySize bound only the\nmain bucket array; overflow buckets grow with the number of distinct keys at\none 64-byte, 7-entry bucket per 7 keys, and tiered storage tiers the log, not\nthe index. The log stays at its full configured size while the index grows\npast it, and the two sum past the machine's memory: field reproductions were\nSIGKILLed by the kernel at ~1.6 billion records per primary on a 62 GiB node\nat 10% disk utilization, with no OutOfMemoryException and no metric exposing\nthe term that grew.\n\nReport index memory beyond the configured index budget to LogSizeTracker,\nwhich subtracts it from the log's target sizes, floored at MinTargetPageCount\npages. The log then sheds pages as the index grows. This is best-effort\ncompensation, not a hard bound -- once the log reaches its floor there is\nnothing left to give back -- but it keeps the total within the configured\nbudget for the range that matters and makes the term observable before the\nprocess dies. Recovery samples the size itself, since it owns the log and\ndeliberately does not run the resizer.\n\nExpose IndexMemoryBudgetBytes and IndexMemoryChargedToLogBudgetBytes in\nINFO STORE, and log a warning as the charge doubles.\n\nTwo latent defects on the same path are fixed:\n\n- MallocFixedPageSize had no bounds check on its fixed 4096-entry page\n  table, so the overflow allocator wrote out of range at exactly 16 GiB,\n  surfacing as IndexOutOfRangeException from a write. It now reserves blocks\n  with a bounded CAS and throws a TsavoriteException naming the remedy,\n  without advancing count past capacity -- an over-capacity count would also\n  break BeginCheckpoint and distort GetMaxValidAddress.\n\n- DetermineEvictionRange advanced headAddress to the start of the next page\n  when a page's records were exhausted, but the record scan stops at\n  MinEvictionHeadAddressLag before the tail, which falls inside the tail page\n  when PageSize exceeds that lag. The resulting headAddress passed\n  TailAddress; ShiftHeadAddress caps HeadAddress at FlushedUntilAddress while\n  ShiftAddressesWithWait waits on the uncapped value, hanging the resizer\n  permanently. The round-up is now capped at the tail.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* Bound hash index overflow buckets as a ratio of the index size\n\nOverflow buckets hold hash entries that do not fit the main bucket array.\nThey grow with the number of distinct keys, no index size setting bounds\nthem, and nothing but an index resize ever frees one, so a store with more\nkeys than its index was sized for grows overflow memory without limit until\nthe kernel OOM-kills the process.\n\nBound them with IndexOverflowThreshold (--index-overflow-threshold), a\npercentage of the main bucket count of the index generation they belong to,\ndefaulting to 300. Exceeding it fails the write that needed a new bucket with\nan error naming the settings that raise it.\n\nThe bound is a ratio rather than a byte size because an overflow bucket\nchains off a main bucket and is scanned by every read and upsert that probes\nit: the ratio is the average chain length. A byte ceiling large enough to be\ngenerous against a big index is an unusable scan against a small one, and the\nremedy for exhausting the bound is a larger index, not a larger ceiling.\n\nExpressing it in the same unit as IndexResizeThreshold also makes the\nrelationship between the two checkable. Both are percentages of the same\nquantity, so the invariant is just IndexOverflowThreshold >\nIndexResizeThreshold: a ceiling at or below the resize trigger would be\nreached before the resize that reclaims overflow buckets, turning a\nrecoverable growth step into a hard failure. Garnet validates this at startup\nand refuses to start on a conflict.\n\nEach generation installed by a resize recomputes its ceiling from its own\nbucket count, so the allowed chain length stays constant as the index grows,\nrather than halving at every grow. The resolved ceiling rounds down to a\nwhole allocator page, is floored at the smallest page table the allocator\nbuilds so a small index still holds a useful number of keys, and is capped by\nwhat the page table can address.\n\nThis changes default capacity. With the out-of-box IndexMemorySize=128m and\nno growth configured, a node now holds roughly 59M records before erroring,\nwhere previously it grew until it was killed. That is the point of the bound,\nbut it is a behavior change for any deployment relying on an undersized index.\n\nINFO STORE reports IndexOverflowThreshold and the resolved\nIndexOverflowMaxMemorySizeBytes alongside current use.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* Address review findings on the overflow bound\n\nTwo independent reviews of the overflow-bucket bound found seven distinct\ndefects. Five were in the new code, two were pre-existing hazards the new\nbudget accounting can reach.\n\nA grow now reserves the buckets the split needs. Splitting inserts an entry\ninto both halves of the new table when the record is not in memory, which is\nthe common case under larger-than-memory operation, so the new generation can\nneed twice the old generation's entries. The threshold-derived ceiling does not\ncover that on its own, because it is quantized to whole allocator pages and\nclamped at both ends. Exhausting it mid-split would throw with a chunk claimed\nand never released, leaving SplitAllBuckets spinning forever, so the capacity\nis guaranteed before any state is mutated and the grow is refused outright if\nit cannot be.\n\nRecovery rebuilds the overflow allocator for the index it installs. A\ncheckpoint taken after the index had grown would otherwise load its buckets\nagainst a ceiling sized for the configured, smaller table, so a store that was\nhealthy before a restart would start refusing inserts after one.\n\nA threshold whose share of the bucket count rounds to nothing now floors at the\nsmallest page table. A zero reaching the allocator reads as \"unconfigured\" and\nsubstitutes the allocator's own much larger default, so the tightest thresholds\nproduced the loosest ceilings.\n\nThreshold validation now checks every index generation the store can actually\nreach, comparing resolved, quantized bucket counts against the resize trigger\nrather than the unquantized percentages.\n\nSumming the live and resizing generations' bucket counts promotes to 64 bits\nbefore multiplying, so the reported overflow size does not wrap.\n\nEviction returns incomplete rather than computing a negative evictable span\nwhen snapping down to a page start lands at or below the head address, which\nthe caller's lag gate alone does not prevent. ShiftAddressesWithWait waits on\nthe address the shift was actually capped to instead of the one requested,\nwhich could never be reached.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* Address PR review findings on the overflow reservation and index accounting\n\n- Reserve the split's overflow buckets in the new allocator instead of only\n  sizing it, so concurrent writes during IN_PROGRESS_GROW cannot consume the\n  capacity the split needs. A split that throws leaves its chunk claimed and\n  SplitAllBuckets spins forever, so the capacity must be guaranteed up front.\n- Rebuild the overflow allocator on every recovery, not only when the table\n  size differs: a same-size checkpoint can carry more overflow than the\n  configured ratio permits.\n- Restore the two-argument TsavoriteBase constructor and delegate it to the\n  sizing constructor, keeping the public signature source compatible.\n- Report overflow memory from committed pages rather than handed-out buckets.\n  The allocator commits level 0 in its constructor and preallocates level 1,\n  so a fresh generation holds 8 MiB while reporting 16 buckets.\n- Correct the split requirement to twice the old generation's overflow\n  buckets. Each old bucket maps to exactly two new buckets, each providing\n  seven main slots, so only the old overflow chain needs new buckets.\n- Include the overflow floor in IndexMemoryBudgetBytes. That 8 MiB is the\n  cost of having an index at all, not of growth, and charging it to the log\n  crushed small log configurations to the eviction floor.\n- Call TestUtils.OnTearDown in the overflow budget fixture.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* [Tsavorite] Keep overflow bucket allocation to a single atomic\n\nThe reservation added for index grow turned InternalAllocate's single\nInterlocked.Add into a CAS retry loop. That is per-record cost on the\noverflow allocation path, which FindOrCreateTag reaches once per chain\nextension.\n\nTake the block with one Interlocked.Add as before and check the index\nthe thread received. A rejected allocation rolls its block back, so\nrepeated rejections cannot run count away and overflow int. Indices are\nhanded out monotonically, so once one thread's index exceeds the limit\nevery later one does too: no valid allocation is lost or duplicated.\n\nGetMaxValidAddress clamps to MaxAllocationCount so the transient\novershoot is invisible to a concurrent reader; BeginCheckpoint derives\npage-table indices from it and would otherwise index past the last\nlevel.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* [Tsavorite] Simplify the index split chain and memory budget configuration\n\nRefactor-only pass over the overflow accounting work; no behavior change.\n\n- SplitIndex: extract AppendToSplitChain, replacing six copies of the same\n  11-line append-and-grow block in SplitChunk.\n- MallocFixedPageSize: ThrowAllocatorFull no longer rolls back the allocation\n  counter as a side effect; the rollback is explicit at the call site. Add\n  GetMemorySizeForRecords so page-granularity arithmetic lives in the allocator\n  rather than at its callers. Reserve snapshots the allocation count once.\n- LogSizeTracker: collapse RefreshExternalMemorySize and\n  SampleExternalMemorySizeWithoutSignal into a single RefreshExternalMemorySize\n  that returns whether the external memory grew, leaving the signalling decision\n  to the caller. Drop a dead local in DetermineEvictionRange.\n- GarnetServerOptions: move the index memory budget and overflow ceiling\n  resolution out of GetSettings into ConfigureIndexMemory.\n- KVSettings: drop the unused MaxIndexOverflowMaxMemorySize.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* [Tsavorite] Fix overflow allocator address aliasing during an index grow\n\nWhile Reserve holds capacity, ordinary and reserved allocations draw from\none counter under two different limits. An ordinary caller rejected at the\nordinary limit rolled the counter back, vacating an address still valid\nunder the reserved limit, so two reserved callers could be handed the same\naddress and alias two overflow bucket chains onto one bucket.\n\nReachable during IN_PROGRESS_GROW, where SplitIndex.AppendToSplitChain\nallocates with the reservation while the data path allocates ordinarily\nfrom the same allocator.\n\nAllocations now publish an increment only when it is within the caller's\nown limit, removing the rollback and with it the aliasing. The path is\nconfined to the grow window: Reserve runs before the allocator is\npublished, so with no reservation outstanding every caller shares one\nlimit and the steady-state path keeps its single Interlocked.Add. Under\none limit the rollback is provably safe, since any caller that could take\nthe vacated address would be rejected at it too.\n\nAlso in this change:\n\n- AllocatedSizeBytes now reports the per-page alignment padding. Each page\n  is over-allocated by SectorSize records, which the property omitted, so\n  the index undercharged the log budget by 0.78%.\n- Allocate() keeps its original signature; the reservation-aware overload\n  is internal, matching Reserve.\n- CacheSizeTracker's constructor and Initialize keep their original CLR\n  signatures, with the index budget on explicit overloads.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n* [Tsavorite] Charge the index to the log budget when a grow completes\n\nHide the level-count constructor of MallocFixedPageSize: callers size the\nallocator by memory budget, and tests now do the same.\n\nAn index grow doubles index memory in one step, which the log size tracker\nonly noticed at its next periodic sample up to ResizeTaskDelaySeconds later.\nSplitAllBuckets now resamples and signals the resizer once the superseded\ngeneration is released, so the log gives up its budget promptly. The signal\nis deliberately not raised while both generations are live: that peak is\nretracted moments later, and evicting against it costs log memory for nothing.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee\n\n---------\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 39b86442-3222-4fb0-befe-985f84f0c3ee",
-          "timestamp": "2026-10-14T16:32:39-07:00",
-          "tree_id": "8cd6e2bb7a67503aa8879f3444dceac4f3dfcbe1",
-          "url": "https://github.com/microsoft/garnet/commit/8bc60763caaf72e91a36872e64cdbf6fb14e2c59"
-        },
-        "date": 1792021023136,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Managed,Limit)",
-            "value": 3008.1632653061224,
-            "unit": "ns",
-            "range": "± 944.2908722529074"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Managed,Limit)",
-            "value": 1648.6486486486488,
-            "unit": "ns",
-            "range": "± 65.07099380088056"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Managed,Limit)",
-            "value": 3082.2916666666665,
-            "unit": "ns",
-            "range": "± 818.0843852583358"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Managed,Limit)",
-            "value": 214066.66666666666,
-            "unit": "ns",
-            "range": "± 2943.8173527005047"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Managed,Limit)",
-            "value": 2729.5454545454545,
-            "unit": "ns",
-            "range": "± 113.25941709303336"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Managed,Limit)",
-            "value": 7031.25,
-            "unit": "ns",
-            "range": "± 130.22416570411704"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Managed,None)",
-            "value": 1979.1666666666667,
-            "unit": "ns",
-            "range": "± 58.82299658752719"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Managed,None)",
-            "value": 1606.4516129032259,
-            "unit": "ns",
-            "range": "± 86.59490717227871"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Managed,None)",
-            "value": 2587.5,
-            "unit": "ns",
-            "range": "± 150.42134914459785"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Managed,None)",
-            "value": 224783.33333333334,
-            "unit": "ns",
-            "range": "± 2631.2227829154513"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Managed,None)",
-            "value": 2735.714285714286,
-            "unit": "ns",
-            "range": "± 86.98354767504922"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Managed,None)",
-            "value": 7240.909090909091,
-            "unit": "ns",
-            "range": "± 353.8697164547657"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Native,None)",
-            "value": 2647.422680412371,
-            "unit": "ns",
-            "range": "± 596.0097845088122"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Native,None)",
-            "value": 1822.4489795918366,
-            "unit": "ns",
-            "range": "± 140.34612019060685"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Native,None)",
-            "value": 3485.714285714286,
-            "unit": "ns",
-            "range": "± 1151.780334154187"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Native,None)",
-            "value": 204226.66666666666,
-            "unit": "ns",
-            "range": "± 2398.352609208087"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Native,None)",
-            "value": 2616.6666666666665,
-            "unit": "ns",
-            "range": "± 105.73013661495895"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Native,None)",
-            "value": 7645.833333333333,
-            "unit": "ns",
-            "range": "± 632.1086959604118"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Tracked,Limit)",
-            "value": 2016.6666666666667,
-            "unit": "ns",
-            "range": "± 90.70253775176262"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Tracked,Limit)",
-            "value": 2326.2626262626263,
-            "unit": "ns",
-            "range": "± 787.3471161718016"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Tracked,Limit)",
-            "value": 2656.521739130435,
-            "unit": "ns",
-            "range": "± 72.77666307098063"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Tracked,Limit)",
-            "value": 243129.23076923078,
-            "unit": "ns",
-            "range": "± 11360.673987996417"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Tracked,Limit)",
-            "value": 2711.4285714285716,
-            "unit": "ns",
-            "range": "± 96.31879839558711"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Tracked,Limit)",
-            "value": 7391.666666666667,
-            "unit": "ns",
-            "range": "± 197.63089590064797"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Tracked,None)",
-            "value": 2551.546391752577,
-            "unit": "ns",
-            "range": "± 529.5661357150964"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Tracked,None)",
-            "value": 1748.5714285714287,
-            "unit": "ns",
-            "range": "± 65.84933146039916"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Tracked,None)",
-            "value": 2637.1428571428573,
-            "unit": "ns",
-            "range": "± 94.20164319072114"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Tracked,None)",
-            "value": 245130.4347826087,
-            "unit": "ns",
-            "range": "± 13445.459539430745"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Tracked,None)",
-            "value": 2685.294117647059,
-            "unit": "ns",
-            "range": "± 95.76598036177779"
-          },
-          {
-            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Tracked,None)",
-            "value": 7381.395348837209,
-            "unit": "ns",
-            "range": "± 268.3776780454918"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "49699333+dependabot[bot]@users.noreply.github.com",
             "name": "dependabot[bot]",
             "username": "dependabot[bot]"
@@ -748101,6 +747897,210 @@ window.BENCHMARK_DATA = {
             "value": 5839.53488372093,
             "unit": "ns",
             "range": "± 218.37008220397746"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0aaaee988da9b52a10702cc7c76e9bd9aa4e6bc5",
+          "message": "Build(deps): Bump docker/login-action (#2348)\n\nBumps the github-actions group with 1 update: [docker/login-action](https://github.com/docker/login-action).\n\n\nUpdates `docker/login-action` from 4.6.0 to 4.7.0\n- [Release notes](https://github.com/docker/login-action/releases)\n- [Commits](https://github.com/docker/login-action/compare/dbcb813823bdd20940b903addbd779551569679f...81c6f93d4bc991e510b342a00b419b3bb4efc5c6)\n\n---\nupdated-dependencies:\n- dependency-name: docker/login-action\n  dependency-version: 4.7.0\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n  dependency-group: github-actions\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2026-11-04T12:14:59-08:00",
+          "tree_id": "3158325e7d99e776fa871337578872c8d7c34ca6",
+          "url": "https://github.com/microsoft/garnet/commit/0aaaee988da9b52a10702cc7c76e9bd9aa4e6bc5"
+        },
+        "date": 1793823585710,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Managed,Limit)",
+            "value": 1677.659574468085,
+            "unit": "ns",
+            "range": "± 443.8720767279034"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Managed,Limit)",
+            "value": 1169.7674418604652,
+            "unit": "ns",
+            "range": "± 157.7934371570932"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Managed,Limit)",
+            "value": 1967.0212765957447,
+            "unit": "ns",
+            "range": "± 371.68268865769784"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Managed,Limit)",
+            "value": 235407.6923076923,
+            "unit": "ns",
+            "range": "± 2938.6679347570434"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Managed,Limit)",
+            "value": 2126.1363636363635,
+            "unit": "ns",
+            "range": "± 281.6186049650964"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Managed,Limit)",
+            "value": 6516.304347826087,
+            "unit": "ns",
+            "range": "± 980.3875858263543"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Managed,None)",
+            "value": 1458.695652173913,
+            "unit": "ns",
+            "range": "± 362.57691079910893"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Managed,None)",
+            "value": 1266.6666666666667,
+            "unit": "ns",
+            "range": "± 127.37699791718119"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Managed,None)",
+            "value": 1740.677966101695,
+            "unit": "ns",
+            "range": "± 89.28575603238565"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Managed,None)",
+            "value": 245468.75,
+            "unit": "ns",
+            "range": "± 4822.685109632047"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Managed,None)",
+            "value": 1982.2222222222222,
+            "unit": "ns",
+            "range": "± 77.72003628668762"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Managed,None)",
+            "value": 6244.210526315789,
+            "unit": "ns",
+            "range": "± 852.6199659115407"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Native,None)",
+            "value": 1472.093023255814,
+            "unit": "ns",
+            "range": "± 211.24346856074845"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Native,None)",
+            "value": 1180,
+            "unit": "ns",
+            "range": "± 150.05616925866218"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Native,None)",
+            "value": 1993.5483870967741,
+            "unit": "ns",
+            "range": "± 502.7763033598504"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Native,None)",
+            "value": 209374.2857142857,
+            "unit": "ns",
+            "range": "± 4460.6345405336315"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Native,None)",
+            "value": 2040.4494382022472,
+            "unit": "ns",
+            "range": "± 353.463094744376"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Native,None)",
+            "value": 5986.813186813187,
+            "unit": "ns",
+            "range": "± 655.7792296546132"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Tracked,Limit)",
+            "value": 1340.6593406593406,
+            "unit": "ns",
+            "range": "± 189.72378869060154"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Tracked,Limit)",
+            "value": 1196.4705882352941,
+            "unit": "ns",
+            "range": "± 157.69701119214523"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Tracked,Limit)",
+            "value": 1682.3529411764705,
+            "unit": "ns",
+            "range": "± 39.29526239966878"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Tracked,Limit)",
+            "value": 255075,
+            "unit": "ns",
+            "range": "± 3763.9739637781768"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Tracked,Limit)",
+            "value": 2087.777777777778,
+            "unit": "ns",
+            "range": "± 363.14103422304026"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Tracked,Limit)",
+            "value": 6431.818181818182,
+            "unit": "ns",
+            "range": "± 937.0466510970991"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupHit(Params: Tracked,None)",
+            "value": 1230.952380952381,
+            "unit": "ns",
+            "range": "± 162.78908704742045"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LookupMiss(Params: Tracked,None)",
+            "value": 1318.888888888889,
+            "unit": "ns",
+            "range": "± 310.45253104534254"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadOuterHit(Params: Tracked,None)",
+            "value": 2104.945054945055,
+            "unit": "ns",
+            "range": "± 517.5291159310613"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadInnerHit(Params: Tracked,None)",
+            "value": 252679.3103448276,
+            "unit": "ns",
+            "range": "± 4723.904204782373"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.LoadMiss(Params: Tracked,None)",
+            "value": 1928.5714285714287,
+            "unit": "ns",
+            "range": "± 196.23439175622738"
+          },
+          {
+            "name": "BDN.benchmark.Lua.LuaScriptCacheOperations.Digest(Params: Tracked,None)",
+            "value": 6101.0204081632655,
+            "unit": "ns",
+            "range": "± 832.3974687437278"
           }
         ]
       }
