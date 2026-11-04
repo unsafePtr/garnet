@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793825279449,
+  "lastUpdate": 1793825318868,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -791629,126 +791629,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "napoli.tiago96@gmail.com",
-            "name": "Tiago Nápoli",
-            "username": "tiagonapoli"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "f2ee9f223b95cacc57cfd6e831e10b688e15b54c",
-          "message": "Remove .NET 8 support (#2230)\n\n* Remove .NET 8 support\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Preserve multi-framework release and benchmark infrastructure\n\nKeep release packaging and publish paths framework-aware while targeting only .NET 10. Retain benchmark job selection for future runtimes.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Minimize .NET 8 release-script removal\n\nRetain the original publish and archive structure, removing only .NET 8 work while keeping the framework-aware archive loop.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Preserve existing release-script formatting\n\nRestore the original whitespace on unchanged .NET 10 publish commands and archive staging lines so the PR diff only shows the required .NET 8 removal.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep benchmark framework options while removing .NET 8\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Limit benchmark README update to .NET 10 commands\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Leave sorted-set implementation unchanged in .NET 8 removal\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Leave GeoHash unchanged in .NET 8 removal\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep .NET 10 publish profiles while dropping .NET 8 entries\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Revert publish-profile conditional path changes\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Limit benchmark config note to .NET 10\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep benchmark overview change limited to .NET 10 default\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Remove redundant benchmark framework exclusion guard\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Load benchmark issuer certificate without warning suppression\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Remove obsolete .NET 9 Tsavorite warning properties\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep .NET 10 publish profiles while removing .NET 8\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Fix .NET 10 formatting in Vector Set key accessors\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Remove obsolete .NET 9 feature guards\n\nDrop conditional branches now that .NET 10 is the sole target framework.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep ref struct anti-constraints on one line\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep alternate comparer interfaces on one line\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n* Keep vector read batch ref struct declaration on one line\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e\n\n---------\n\nCo-authored-by: Tiago Napoli <tiagonapoli@microsoft.com>\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 4d65adcc-753b-4191-87bc-d7df97ba762e",
-          "timestamp": "2026-10-14T16:56:19-07:00",
-          "tree_id": "54937adadfe54fad20b44a2c186db99ccc691548",
-          "url": "https://github.com/microsoft/garnet/commit/f2ee9f223b95cacc57cfd6e831e10b688e15b54c"
-        },
-        "date": 1792022705487,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: AAD)",
-            "value": 26226.64256286621,
-            "unit": "ns",
-            "range": "± 15.487077800977893"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: AAD)",
-            "value": 87158.49642508371,
-            "unit": "ns",
-            "range": "± 311.2410979950095"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: AAD)",
-            "value": 91081.75246957633,
-            "unit": "ns",
-            "range": "± 115.43573281383205"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: AAD)",
-            "value": 56441.4142804827,
-            "unit": "ns",
-            "range": "± 82.97806874652062"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: ACL)",
-            "value": 25336.919211251396,
-            "unit": "ns",
-            "range": "± 28.725001389221298"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: ACL)",
-            "value": 87833.94018554688,
-            "unit": "ns",
-            "range": "± 56.8078607198107"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: ACL)",
-            "value": 91110.72328404018,
-            "unit": "ns",
-            "range": "± 279.34277618182875"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: ACL)",
-            "value": 55589.21936035156,
-            "unit": "ns",
-            "range": "± 62.35123968583024"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: AOF)",
-            "value": 24758.041900634766,
-            "unit": "ns",
-            "range": "± 30.246492836742764"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: AOF)",
-            "value": 99310.95333658854,
-            "unit": "ns",
-            "range": "± 357.22732070113136"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: AOF)",
-            "value": 105638.2795316256,
-            "unit": "ns",
-            "range": "± 218.58227399263288"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: AOF)",
-            "value": 106071.57980782645,
-            "unit": "ns",
-            "range": "± 207.7783771466712"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: None)",
-            "value": 26642.38992527553,
-            "unit": "ns",
-            "range": "± 24.5119988343417"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: None)",
-            "value": 88186.00378417969,
-            "unit": "ns",
-            "range": "± 107.36136224954265"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: None)",
-            "value": 93555.11682128906,
-            "unit": "ns",
-            "range": "± 115.05810218702693"
-          },
-          {
-            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: None)",
-            "value": 54155.82397664388,
-            "unit": "ns",
-            "range": "± 59.961513751794136"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "matrembl@microsoft.com",
             "name": "Mathieu Tremblay",
             "username": "Mathos1432"
@@ -797623,6 +797503,126 @@ window.BENCHMARK_DATA = {
             "value": 43998.297520955406,
             "unit": "ns",
             "range": "± 14.040524384070395"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b498f6e2342a2233ed4d794a716af42bb6ffbd97",
+          "message": "Fix slot migration when Vector Set preview disabled (#2353)\n\n* failing test for migrating slots when vector set preview is disabled\n\n* fix for slot migration when vector set preview disabled",
+          "timestamp": "2026-11-04T15:41:30-05:00",
+          "tree_id": "d078fa8dd57e28973658b8f26cfdc130a7d4c3c0",
+          "url": "https://github.com/microsoft/garnet/commit/b498f6e2342a2233ed4d794a716af42bb6ffbd97"
+        },
+        "date": 1793825296755,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: AAD)",
+            "value": 17576.426498413086,
+            "unit": "ns",
+            "range": "± 33.16935560440141"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: AAD)",
+            "value": 61715.96923828125,
+            "unit": "ns",
+            "range": "± 83.4869129252381"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: AAD)",
+            "value": 68669.3234514509,
+            "unit": "ns",
+            "range": "± 69.60060187400487"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: AAD)",
+            "value": 44012.7428541917,
+            "unit": "ns",
+            "range": "± 34.28423754566214"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: ACL)",
+            "value": 18047.221135457356,
+            "unit": "ns",
+            "range": "± 15.884013678036792"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: ACL)",
+            "value": 64705.41208496094,
+            "unit": "ns",
+            "range": "± 126.83256734200485"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: ACL)",
+            "value": 73288.8062133789,
+            "unit": "ns",
+            "range": "± 56.721063806251806"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: ACL)",
+            "value": 48929.51006644113,
+            "unit": "ns",
+            "range": "± 33.715902785652254"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: AOF)",
+            "value": 17497.709309169226,
+            "unit": "ns",
+            "range": "± 13.080577333633357"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: AOF)",
+            "value": 69800.39339773996,
+            "unit": "ns",
+            "range": "± 143.180161928235"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: AOF)",
+            "value": 84414.18809157152,
+            "unit": "ns",
+            "range": "± 145.74232243307696"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: AOF)",
+            "value": 76730.50910644532,
+            "unit": "ns",
+            "range": "± 146.95018018116477"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomRawStringCommand(Params: None)",
+            "value": 17598.978029691258,
+            "unit": "ns",
+            "range": "± 32.16302905958297"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomObjectCommand(Params: None)",
+            "value": 61105.117544991626,
+            "unit": "ns",
+            "range": "± 50.53938016991488"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomTransaction(Params: None)",
+            "value": 68926.86710902622,
+            "unit": "ns",
+            "range": "± 61.57169571407669"
+          },
+          {
+            "name": "BDN.benchmark.Operations.CustomOperations.CustomProcedure(Params: None)",
+            "value": 43411.0885538737,
+            "unit": "ns",
+            "range": "± 31.689909865722342"
           }
         ]
       }
