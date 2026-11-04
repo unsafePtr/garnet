@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793816467063,
+  "lastUpdate": 1793817018340,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -962961,654 +962961,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "matrembl@microsoft.com",
-            "name": "Mathieu Tremblay",
-            "username": "Mathos1432"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "456925d8b36eb139d0a37937b85c085ab815c482",
-          "message": "[Cluster] Add separate peer endpoints and optimistic gossip in 2.2.2 (#2201)\n\n* [Cluster] Add separate client and peer endpoints\n\nAdd cluster-address and nullable cluster-port, separate client advertisements\nfrom peer routing, and enable configuration format version two.\n\nSet version 3.0.0 and require every existing node to run 2.2.0 or later\nbefore upgrading. Document bootstrap and upgrade requirements.\n\nCover endpoint discovery, redirects, migration, replication, failover,\nrecovery, and port validation with client and configuration tests.\n\n* [Tests] Fix hostname listeners and replica restart setup\n\n* [Tests] Wait for failover completion before client reads\n\n* [Cluster] Keep client-facing reports and failover errors on client endpoints\n\n* [Cluster] Negotiate gossip versions optimistically in Garnet 2.3.0\n\n* [Cluster] Skip failed peer initialization during publish forwarding\n\n* [Version] Release peer endpoint support as 2.2.2\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n* [Cluster] Offer highest supported gossip version during negotiation\n\nReply to unsupported gossip with a full configuration in the highest supported format without merging the payload or changing the selected connection state. Cover future-version probes, repeated offers, split endpoints, supported retries, and incompatible replies.\n\nCo-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19\n\n---------\n\nCopilot-Session: 792f9457-7c13-4dad-a4f0-eff79ae90a19",
-          "timestamp": "2026-10-14T18:17:21-04:00",
-          "tree_id": "ea6557e3cc11063c8efc5c509d755dbaee4a8327",
-          "url": "https://github.com/microsoft/garnet/commit/456925d8b36eb139d0a37937b85c085ab815c482"
-        },
-        "date": 1792018394407,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: AAD)",
-            "value": 59095.72296142578,
-            "unit": "ns",
-            "range": "± 103.5880510387775"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: AAD)",
-            "value": 15428.520830426898,
-            "unit": "ns",
-            "range": "± 28.709175688894923"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: AAD)",
-            "value": 38130.59823373648,
-            "unit": "ns",
-            "range": "± 92.33607840107894"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: AAD)",
-            "value": 66528.52076822917,
-            "unit": "ns",
-            "range": "± 236.72736099027074"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: AAD)",
-            "value": 93477.10300990513,
-            "unit": "ns",
-            "range": "± 187.4517537273499"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: AAD)",
-            "value": 53891.266603597,
-            "unit": "ns",
-            "range": "± 328.9840740145853"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: AAD)",
-            "value": 83015.70200195312,
-            "unit": "ns",
-            "range": "± 399.2638502238682"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: AAD)",
-            "value": 74025.98055594308,
-            "unit": "ns",
-            "range": "± 174.75441967460884"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: AAD)",
-            "value": 125228.13745117188,
-            "unit": "ns",
-            "range": "± 519.8515446496328"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: AAD)",
-            "value": 56136.647216796875,
-            "unit": "ns",
-            "range": "± 450.8406683267428"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: AAD)",
-            "value": 132607.34921875,
-            "unit": "ns",
-            "range": "± 422.50992878031985"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: AAD)",
-            "value": 35955.39934895833,
-            "unit": "ns",
-            "range": "± 92.27184355948434"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: AAD)",
-            "value": 76694.60708821614,
-            "unit": "ns",
-            "range": "± 216.28905447577725"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: AAD)",
-            "value": 81768.49987792969,
-            "unit": "ns",
-            "range": "± 211.20917721608566"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: AAD)",
-            "value": 4575.375803266253,
-            "unit": "ns",
-            "range": "± 10.234698734609227"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: AAD)",
-            "value": 42703.841923304964,
-            "unit": "ns",
-            "range": "± 54.618068332256534"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: AAD)",
-            "value": 236943.74438476562,
-            "unit": "ns",
-            "range": "± 586.0570442691785"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: AAD)",
-            "value": 27231.968821207684,
-            "unit": "ns",
-            "range": "± 45.39760160093305"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: AAD)",
-            "value": 150460.1088344029,
-            "unit": "ns",
-            "range": "± 275.5540415757394"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: AAD)",
-            "value": 140464.23788016182,
-            "unit": "ns",
-            "range": "± 321.10826987956807"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: AAD)",
-            "value": 99829.9839390346,
-            "unit": "ns",
-            "range": "± 416.9123663685938"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: AAD)",
-            "value": 30744.569608561196,
-            "unit": "ns",
-            "range": "± 150.1632902650882"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: AAD)",
-            "value": 3452.5248087565105,
-            "unit": "ns",
-            "range": "± 5.561109329900303"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: AAD)",
-            "value": 28250.3885944073,
-            "unit": "ns",
-            "range": "± 64.50445556517012"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: AAD)",
-            "value": 82614.69934953962,
-            "unit": "ns",
-            "range": "± 198.89842519486706"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: AAD)",
-            "value": 130252.87032063802,
-            "unit": "ns",
-            "range": "± 291.2114332544032"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: ACL)",
-            "value": 60463.94662475586,
-            "unit": "ns",
-            "range": "± 98.41650523272337"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: ACL)",
-            "value": 3086.262498219808,
-            "unit": "ns",
-            "range": "± 1.94535884368482"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: ACL)",
-            "value": 4751.723821786733,
-            "unit": "ns",
-            "range": "± 5.98780596182194"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: ACL)",
-            "value": 4781.1865442911785,
-            "unit": "ns",
-            "range": "± 5.611444544810497"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: ACL)",
-            "value": 9380.684753417969,
-            "unit": "ns",
-            "range": "± 7.2926136712114005"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: ACL)",
-            "value": 9277.257353562574,
-            "unit": "ns",
-            "range": "± 13.408033858939858"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: ACL)",
-            "value": 4900.015716552734,
-            "unit": "ns",
-            "range": "± 11.324332105063217"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: ACL)",
-            "value": 8597.919176541842,
-            "unit": "ns",
-            "range": "± 12.854479161953046"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: ACL)",
-            "value": 9478.545552180363,
-            "unit": "ns",
-            "range": "± 9.784855051840413"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: ACL)",
-            "value": 8947.378940037319,
-            "unit": "ns",
-            "range": "± 9.524189787387659"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: ACL)",
-            "value": 32301.452458308293,
-            "unit": "ns",
-            "range": "± 48.802182609308844"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: ACL)",
-            "value": 7834.921417236328,
-            "unit": "ns",
-            "range": "± 7.083596716681903"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: ACL)",
-            "value": 36056.79147573618,
-            "unit": "ns",
-            "range": "± 54.43785332663135"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: ACL)",
-            "value": 35387.4362886869,
-            "unit": "ns",
-            "range": "± 26.857487266847432"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: ACL)",
-            "value": 4604.262176513672,
-            "unit": "ns",
-            "range": "± 17.274377930400885"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: ACL)",
-            "value": 4963.285913194929,
-            "unit": "ns",
-            "range": "± 6.009758336807637"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: ACL)",
-            "value": 9351.205656941731,
-            "unit": "ns",
-            "range": "± 16.41542156153781"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: ACL)",
-            "value": 4036.1871272495814,
-            "unit": "ns",
-            "range": "± 4.387767011647338"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: ACL)",
-            "value": 38610.657849993026,
-            "unit": "ns",
-            "range": "± 59.29161435301055"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: ACL)",
-            "value": 38913.8381632487,
-            "unit": "ns",
-            "range": "± 74.06106851168609"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: ACL)",
-            "value": 38570.662339430586,
-            "unit": "ns",
-            "range": "± 39.88118561903074"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: ACL)",
-            "value": 7758.553933279855,
-            "unit": "ns",
-            "range": "± 10.275847496125598"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: ACL)",
-            "value": 3553.941436258952,
-            "unit": "ns",
-            "range": "± 4.753291042831702"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: ACL)",
-            "value": 3978.876765324519,
-            "unit": "ns",
-            "range": "± 8.429760755169154"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: ACL)",
-            "value": 4955.830163222093,
-            "unit": "ns",
-            "range": "± 6.035085754850878"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: ACL)",
-            "value": 9373.349794660297,
-            "unit": "ns",
-            "range": "± 7.046353275427788"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: AOF)",
-            "value": 82471.20670572917,
-            "unit": "ns",
-            "range": "± 234.1504958376115"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: AOF)",
-            "value": 15999.002667236327,
-            "unit": "ns",
-            "range": "± 11.832199714993118"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: AOF)",
-            "value": 35364.084673200334,
-            "unit": "ns",
-            "range": "± 63.68899696486351"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: AOF)",
-            "value": 65516.35053507487,
-            "unit": "ns",
-            "range": "± 76.43023266857936"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: AOF)",
-            "value": 110098.39689941406,
-            "unit": "ns",
-            "range": "± 346.9624267313867"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: AOF)",
-            "value": 65174.97286783854,
-            "unit": "ns",
-            "range": "± 282.93422834841476"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: AOF)",
-            "value": 74952.99389648438,
-            "unit": "ns",
-            "range": "± 140.06155565288057"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: AOF)",
-            "value": 75178.93028846153,
-            "unit": "ns",
-            "range": "± 88.64766998916978"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: AOF)",
-            "value": 195036.51055036273,
-            "unit": "ns",
-            "range": "± 455.04465696246405"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: AOF)",
-            "value": 55337.92416381836,
-            "unit": "ns",
-            "range": "± 187.95359172887743"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: AOF)",
-            "value": 176334.10001627603,
-            "unit": "ns",
-            "range": "± 553.3619499257785"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: AOF)",
-            "value": 35144.17703450521,
-            "unit": "ns",
-            "range": "± 138.30033260366514"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: AOF)",
-            "value": 104690.4804774693,
-            "unit": "ns",
-            "range": "± 281.2024453753899"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: AOF)",
-            "value": 101333.49439348493,
-            "unit": "ns",
-            "range": "± 334.58164170818907"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: AOF)",
-            "value": 4707.450429476225,
-            "unit": "ns",
-            "range": "± 10.771318720088264"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: AOF)",
-            "value": 43833.67126464844,
-            "unit": "ns",
-            "range": "± 50.359100898859865"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: AOF)",
-            "value": 287313.99309895834,
-            "unit": "ns",
-            "range": "± 1018.6373096620744"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: AOF)",
-            "value": 27699.534816196985,
-            "unit": "ns",
-            "range": "± 76.10681886069938"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: AOF)",
-            "value": 174643.61095252403,
-            "unit": "ns",
-            "range": "± 636.2349975101829"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: AOF)",
-            "value": 170478.70834960937,
-            "unit": "ns",
-            "range": "± 486.6653332741128"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: AOF)",
-            "value": 129383.85344587054,
-            "unit": "ns",
-            "range": "± 433.5088503061495"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: AOF)",
-            "value": 32684.69264439174,
-            "unit": "ns",
-            "range": "± 74.09680213258977"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: AOF)",
-            "value": 3463.2086097717283,
-            "unit": "ns",
-            "range": "± 7.1551900037062"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: AOF)",
-            "value": 26592.453600202287,
-            "unit": "ns",
-            "range": "± 21.511965696741832"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: AOF)",
-            "value": 82185.1514485677,
-            "unit": "ns",
-            "range": "± 266.9904112625344"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: AOF)",
-            "value": 207197.93035016741,
-            "unit": "ns",
-            "range": "± 577.877637571433"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: None)",
-            "value": 58149.22592163086,
-            "unit": "ns",
-            "range": "± 325.977243458743"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: None)",
-            "value": 15669.819899495442,
-            "unit": "ns",
-            "range": "± 34.85269232089083"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: None)",
-            "value": 35927.69730486189,
-            "unit": "ns",
-            "range": "± 56.5064483263393"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: None)",
-            "value": 69495.90146891277,
-            "unit": "ns",
-            "range": "± 103.65338157808262"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: None)",
-            "value": 96633.77098795572,
-            "unit": "ns",
-            "range": "± 218.92674556969394"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: None)",
-            "value": 54240.99165852865,
-            "unit": "ns",
-            "range": "± 126.35281561841903"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: None)",
-            "value": 72368.94574444111,
-            "unit": "ns",
-            "range": "± 122.31767735578613"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: None)",
-            "value": 73539.25964355469,
-            "unit": "ns",
-            "range": "± 123.01852268635535"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: None)",
-            "value": 121863.85163574219,
-            "unit": "ns",
-            "range": "± 692.1402051887346"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: None)",
-            "value": 55000.75851033528,
-            "unit": "ns",
-            "range": "± 147.94053075608497"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: None)",
-            "value": 131016.40634390023,
-            "unit": "ns",
-            "range": "± 335.51156985566666"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: None)",
-            "value": 36061.77585073618,
-            "unit": "ns",
-            "range": "± 63.24294459456263"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: None)",
-            "value": 76132.03486851284,
-            "unit": "ns",
-            "range": "± 133.39500353114727"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: None)",
-            "value": 75689.43701171875,
-            "unit": "ns",
-            "range": "± 114.557894587959"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: None)",
-            "value": 4653.053077697754,
-            "unit": "ns",
-            "range": "± 9.96408505789389"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: None)",
-            "value": 44974.38790079753,
-            "unit": "ns",
-            "range": "± 71.2638019363627"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: None)",
-            "value": 234357.007418119,
-            "unit": "ns",
-            "range": "± 617.2447978829667"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: None)",
-            "value": 25693.321868896484,
-            "unit": "ns",
-            "range": "± 43.23869940386122"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: None)",
-            "value": 149412.09353841146,
-            "unit": "ns",
-            "range": "± 449.33801127115584"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: None)",
-            "value": 138603.85747070314,
-            "unit": "ns",
-            "range": "± 647.2329273105676"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: None)",
-            "value": 102103.04326171875,
-            "unit": "ns",
-            "range": "± 380.43237430131813"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: None)",
-            "value": 32876.42741041917,
-            "unit": "ns",
-            "range": "± 84.46778121979366"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: None)",
-            "value": 3487.5944895063126,
-            "unit": "ns",
-            "range": "± 6.74951878149733"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: None)",
-            "value": 28714.89663187663,
-            "unit": "ns",
-            "range": "± 61.765932781799094"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: None)",
-            "value": 80305.41905866351,
-            "unit": "ns",
-            "range": "± 159.86023568837328"
-          },
-          {
-            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: None)",
-            "value": 128696.97879732572,
-            "unit": "ns",
-            "range": "± 231.60548233375255"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "badrishc@microsoft.com",
             "name": "Badrish Chandramouli",
             "username": "badrishc"
@@ -995355,6 +994707,654 @@ window.BENCHMARK_DATA = {
             "value": 90698.66900165264,
             "unit": "ns",
             "range": "± 199.32753169962942"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f39d29e515f384b2eb51eca3eb93d3f6f552631",
+          "message": "bump version to 2.2.6 (#2352)",
+          "timestamp": "2026-11-04T12:55:24-05:00",
+          "tree_id": "6b86c721d03eea10ae6c0c83380c2c612f7bb01a",
+          "url": "https://github.com/microsoft/garnet/commit/6f39d29e515f384b2eb51eca3eb93d3f6f552631"
+        },
+        "date": 1793817005435,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: AAD)",
+            "value": 28506.6112107497,
+            "unit": "ns",
+            "range": "± 245.28720664376252"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: AAD)",
+            "value": 8422.654973347982,
+            "unit": "ns",
+            "range": "± 26.904300829202235"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: AAD)",
+            "value": 16117.717477651742,
+            "unit": "ns",
+            "range": "± 43.94645043671936"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: AAD)",
+            "value": 33913.320514385516,
+            "unit": "ns",
+            "range": "± 176.04602768919804"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: AAD)",
+            "value": 50675.84659249442,
+            "unit": "ns",
+            "range": "± 541.1078073011249"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: AAD)",
+            "value": 30328.069580078125,
+            "unit": "ns",
+            "range": "± 200.97519440152348"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: AAD)",
+            "value": 37200.588967459546,
+            "unit": "ns",
+            "range": "± 372.3891871809662"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: AAD)",
+            "value": 36775.37940392127,
+            "unit": "ns",
+            "range": "± 173.1838754790631"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: AAD)",
+            "value": 59989.138899739584,
+            "unit": "ns",
+            "range": "± 697.2051868073337"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: AAD)",
+            "value": 25417.213256835938,
+            "unit": "ns",
+            "range": "± 366.54607772609273"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: AAD)",
+            "value": 74860.88881272536,
+            "unit": "ns",
+            "range": "± 948.4285237349982"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: AAD)",
+            "value": 15636.242303030831,
+            "unit": "ns",
+            "range": "± 111.20793326088851"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: AAD)",
+            "value": 40374.31717529297,
+            "unit": "ns",
+            "range": "± 378.26768909132704"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: AAD)",
+            "value": 39529.13464791434,
+            "unit": "ns",
+            "range": "± 426.0949236676722"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: AAD)",
+            "value": 2423.3049319340635,
+            "unit": "ns",
+            "range": "± 15.051252351858109"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: AAD)",
+            "value": 18512.351674397785,
+            "unit": "ns",
+            "range": "± 153.46304199963475"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: AAD)",
+            "value": 115397.16552264873,
+            "unit": "ns",
+            "range": "± 1335.03440427892"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: AAD)",
+            "value": 12942.500908406575,
+            "unit": "ns",
+            "range": "± 181.51237538297352"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: AAD)",
+            "value": 83309.07176862445,
+            "unit": "ns",
+            "range": "± 1167.4437733669192"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: AAD)",
+            "value": 76566.50626046317,
+            "unit": "ns",
+            "range": "± 573.3095725797332"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: AAD)",
+            "value": 51191.772404261996,
+            "unit": "ns",
+            "range": "± 622.2578110555843"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: AAD)",
+            "value": 15028.364912923176,
+            "unit": "ns",
+            "range": "± 157.71737169544747"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: AAD)",
+            "value": 1806.28798528818,
+            "unit": "ns",
+            "range": "± 17.451216142274294"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: AAD)",
+            "value": 13887.480876668295,
+            "unit": "ns",
+            "range": "± 205.07796707313992"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: AAD)",
+            "value": 40661.98370869955,
+            "unit": "ns",
+            "range": "± 390.72321726429726"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: AAD)",
+            "value": 63845.851673473015,
+            "unit": "ns",
+            "range": "± 1968.8287786350973"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: ACL)",
+            "value": 31771.738236710833,
+            "unit": "ns",
+            "range": "± 919.2258918222726"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: ACL)",
+            "value": 1542.8211920601982,
+            "unit": "ns",
+            "range": "± 14.535546202204955"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: ACL)",
+            "value": 2152.5557564326696,
+            "unit": "ns",
+            "range": "± 20.838045124355645"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: ACL)",
+            "value": 2186.267946243286,
+            "unit": "ns",
+            "range": "± 24.166383903528708"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: ACL)",
+            "value": 4342.196373530796,
+            "unit": "ns",
+            "range": "± 23.22930108933107"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: ACL)",
+            "value": 4359.612225123814,
+            "unit": "ns",
+            "range": "± 39.32055188379334"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: ACL)",
+            "value": 2172.596685409546,
+            "unit": "ns",
+            "range": "± 23.80513574332972"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: ACL)",
+            "value": 4012.9855728149414,
+            "unit": "ns",
+            "range": "± 21.342664701004193"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: ACL)",
+            "value": 4378.545715332031,
+            "unit": "ns",
+            "range": "± 16.328075694537535"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: ACL)",
+            "value": 4122.4793047223775,
+            "unit": "ns",
+            "range": "± 35.00632081131746"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: ACL)",
+            "value": 14964.886531829834,
+            "unit": "ns",
+            "range": "± 212.6712765823374"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: ACL)",
+            "value": 3637.3968606676376,
+            "unit": "ns",
+            "range": "± 26.8961721731954"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: ACL)",
+            "value": 16515.809775797527,
+            "unit": "ns",
+            "range": "± 157.94131473739665"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: ACL)",
+            "value": 16742.143852233887,
+            "unit": "ns",
+            "range": "± 78.72484293646536"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: ACL)",
+            "value": 2443.9321823120117,
+            "unit": "ns",
+            "range": "± 12.537650191499221"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: ACL)",
+            "value": 2143.640187399728,
+            "unit": "ns",
+            "range": "± 11.326729682740583"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: ACL)",
+            "value": 4348.3566000802175,
+            "unit": "ns",
+            "range": "± 31.693411596702717"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: ACL)",
+            "value": 1834.6056410925728,
+            "unit": "ns",
+            "range": "± 6.384023497075609"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: ACL)",
+            "value": 17345.497013346354,
+            "unit": "ns",
+            "range": "± 81.95097521631838"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: ACL)",
+            "value": 18396.735641479492,
+            "unit": "ns",
+            "range": "± 110.57328344086557"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: ACL)",
+            "value": 16764.54118347168,
+            "unit": "ns",
+            "range": "± 88.9557850845556"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: ACL)",
+            "value": 3392.6192141941615,
+            "unit": "ns",
+            "range": "± 8.598618891200564"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: ACL)",
+            "value": 1828.8882287832407,
+            "unit": "ns",
+            "range": "± 6.952381486792501"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: ACL)",
+            "value": 1845.1098301751274,
+            "unit": "ns",
+            "range": "± 14.307067897300657"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: ACL)",
+            "value": 2137.8516423361643,
+            "unit": "ns",
+            "range": "± 6.420648520651067"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: ACL)",
+            "value": 4617.823112487793,
+            "unit": "ns",
+            "range": "± 40.66207389612732"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: AOF)",
+            "value": 43175.960510253906,
+            "unit": "ns",
+            "range": "± 840.5419744413703"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: AOF)",
+            "value": 8342.887105669293,
+            "unit": "ns",
+            "range": "± 63.00182906689111"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: AOF)",
+            "value": 17596.037365722656,
+            "unit": "ns",
+            "range": "± 159.61023711997004"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: AOF)",
+            "value": 34085.9300396259,
+            "unit": "ns",
+            "range": "± 286.80882661077703"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: AOF)",
+            "value": 59913.5547921317,
+            "unit": "ns",
+            "range": "± 493.767466897951"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: AOF)",
+            "value": 37157.308657132664,
+            "unit": "ns",
+            "range": "± 229.504955933323"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: AOF)",
+            "value": 37210.82568359375,
+            "unit": "ns",
+            "range": "± 288.32391962344917"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: AOF)",
+            "value": 36739.74822184245,
+            "unit": "ns",
+            "range": "± 212.70347876170604"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: AOF)",
+            "value": 96618.40475802952,
+            "unit": "ns",
+            "range": "± 2023.4915204019385"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: AOF)",
+            "value": 26777.541259765625,
+            "unit": "ns",
+            "range": "± 137.00627358726132"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: AOF)",
+            "value": 93798.31849161784,
+            "unit": "ns",
+            "range": "± 1122.125210496035"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: AOF)",
+            "value": 16144.876408503605,
+            "unit": "ns",
+            "range": "± 176.19127942988172"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: AOF)",
+            "value": 52961.00142923991,
+            "unit": "ns",
+            "range": "± 274.0586736230505"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: AOF)",
+            "value": 52992.78509085519,
+            "unit": "ns",
+            "range": "± 612.4102797635671"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: AOF)",
+            "value": 2515.8216857910156,
+            "unit": "ns",
+            "range": "± 43.82310874785185"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: AOF)",
+            "value": 18560.13947347005,
+            "unit": "ns",
+            "range": "± 295.57561305526474"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: AOF)",
+            "value": 142171.80825570913,
+            "unit": "ns",
+            "range": "± 569.2797870921831"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: AOF)",
+            "value": 13090.544710286458,
+            "unit": "ns",
+            "range": "± 155.36493496561542"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: AOF)",
+            "value": 96017.46217447917,
+            "unit": "ns",
+            "range": "± 1027.8144646294536"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: AOF)",
+            "value": 89339.59131798378,
+            "unit": "ns",
+            "range": "± 417.20329527369523"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: AOF)",
+            "value": 67277.85212590144,
+            "unit": "ns",
+            "range": "± 690.8211410778556"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: AOF)",
+            "value": 14459.787686665853,
+            "unit": "ns",
+            "range": "± 103.80370683692115"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: AOF)",
+            "value": 1837.7038169273962,
+            "unit": "ns",
+            "range": "± 29.07316640648262"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: AOF)",
+            "value": 13226.780931912936,
+            "unit": "ns",
+            "range": "± 148.62889204597647"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: AOF)",
+            "value": 40671.158040364586,
+            "unit": "ns",
+            "range": "± 252.84320205267568"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: AOF)",
+            "value": 102631.66782924107,
+            "unit": "ns",
+            "range": "± 960.7561826436151"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZAddRem(Params: None)",
+            "value": 27825.009073110727,
+            "unit": "ns",
+            "range": "± 156.1515006677708"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCard(Params: None)",
+            "value": 8272.1253389631,
+            "unit": "ns",
+            "range": "± 40.47299856798057"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZCount(Params: None)",
+            "value": 16746.62980769231,
+            "unit": "ns",
+            "range": "± 209.6325070208534"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiff(Params: None)",
+            "value": 34714.28471961388,
+            "unit": "ns",
+            "range": "± 286.0711304324337"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZDiffStore(Params: None)",
+            "value": 51528.70870463053,
+            "unit": "ns",
+            "range": "± 298.16540679446916"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZIncrby(Params: None)",
+            "value": 28281.078450520832,
+            "unit": "ns",
+            "range": "± 414.1799124717009"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInter(Params: None)",
+            "value": 38819.51352539063,
+            "unit": "ns",
+            "range": "± 555.3611109760743"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterCard(Params: None)",
+            "value": 35964.13494001116,
+            "unit": "ns",
+            "range": "± 212.97156300957684"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZInterStore(Params: None)",
+            "value": 61423.116526285805,
+            "unit": "ns",
+            "range": "± 1094.028719258018"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZLexCount(Params: None)",
+            "value": 26705.76717703683,
+            "unit": "ns",
+            "range": "± 254.92762391309395"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMPop(Params: None)",
+            "value": 73633.20152064732,
+            "unit": "ns",
+            "range": "± 420.02741486000144"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZMScore(Params: None)",
+            "value": 15781.45103236607,
+            "unit": "ns",
+            "range": "± 71.63085122108335"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMax(Params: None)",
+            "value": 42011.99193028041,
+            "unit": "ns",
+            "range": "± 592.1149205704344"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZPopMin(Params: None)",
+            "value": 43448.773681640625,
+            "unit": "ns",
+            "range": "± 288.5040129997646"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRandMember(Params: None)",
+            "value": 2516.2399355570474,
+            "unit": "ns",
+            "range": "± 40.11910391786635"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRange(Params: None)",
+            "value": 18963.493183135986,
+            "unit": "ns",
+            "range": "± 367.16806911017693"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRangeStore(Params: None)",
+            "value": 118048.355859375,
+            "unit": "ns",
+            "range": "± 1933.2305679047283"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRank(Params: None)",
+            "value": 13413.575346628824,
+            "unit": "ns",
+            "range": "± 108.85291614740115"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByLex(Params: None)",
+            "value": 84031.49040876116,
+            "unit": "ns",
+            "range": "± 817.4707046525738"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByRank(Params: None)",
+            "value": 76854.96053641183,
+            "unit": "ns",
+            "range": "± 746.3439432352442"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRemRangeByScore(Params: None)",
+            "value": 52014.78204781668,
+            "unit": "ns",
+            "range": "± 708.4448670287208"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZRevRank(Params: None)",
+            "value": 14418.267609816332,
+            "unit": "ns",
+            "range": "± 72.66116330040023"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScan(Params: None)",
+            "value": 1840.0060545603435,
+            "unit": "ns",
+            "range": "± 11.91529445975032"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZScore(Params: None)",
+            "value": 13490.616607666016,
+            "unit": "ns",
+            "range": "± 197.9192413046494"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnion(Params: None)",
+            "value": 43720.03856743706,
+            "unit": "ns",
+            "range": "± 920.4714480455533"
+          },
+          {
+            "name": "BDN.benchmark.Operations.SortedSetOperations.ZUnionStore(Params: None)",
+            "value": 66111.76611328125,
+            "unit": "ns",
+            "range": "± 480.3316799643659"
           }
         ]
       }
