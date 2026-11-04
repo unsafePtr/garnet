@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1793828633183,
+  "lastUpdate": 1793828664597,
   "repoUrl": "https://github.com/microsoft/garnet",
   "entries": {
     "Benchmark": [],
@@ -735505,54 +735505,6 @@ window.BENCHMARK_DATA = {
       {
         "commit": {
           "author": {
-            "email": "napoli.tiago96@gmail.com",
-            "name": "Tiago Nápoli",
-            "username": "tiagonapoli"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "48d6d6adf19ea320319b77faf7a7a58e6296dad8",
-          "message": "Prevent AOF writes during diskless checkpoint streaming (#2252)\n\n* Avoid AOF writes during diskless checkpoint replay\n\nApply streamed checkpoint records through the AOF processor replay session, which shares the store but disables AOF recording. Assert the replica AOF tail is unchanged while a checkpoint record is applied.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Test Vector Set checkpoint imports do not write AOF\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Assert Vector Set record types across replication, migration and recovery tests\n\nPort the record-type assertions from #111 so tests detect Vector Set indexes stored with the wrong record type.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Rename SetCheckpointRecord to ApplySnapshotRecord\n\nDiskless sync streams a snapshot, not a checkpoint, to the replica.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Skip diskless AOF regression tests at runtime outside Debug\n\nUse the existing exception-injection ignore helpers instead of compiling the tests out with #if DEBUG.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Drop redundant DEBUG guard around snapshot pause point\n\nPause points can only be enabled in Debug, so ResetAndWait is a no-op in Release.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Simplify diskless AOF regression tests\n\nUse MeetAndAssignSlots for cluster setup, a shared GetAofTailAddress helper, and a new disposable SuspendParkingScope so the pause/parking handshake no longer needs a flag and manual try/finally.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Check AOF tail after the entire diskless snapshot\n\nPause full-sync recovery before it resets the AOF addresses, so both regression tests compare the replica tail before and after the complete snapshot transfer rather than after one record.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Keep Vector Set record-type checks in shared validation helpers\n\nRemove scattered TYPE assertions from individual migration and recovery tests while retaining the record-type checks in VectorSetReplicationTestBase validation helpers.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Simplify diskless recovery test synchronization and type checks\n\nApply the recovery pause to full and partial sync. Release parked recovery explicitly within EnabledScope instead of globally suspending parking, and remove the unused suspension scope. Use TYPE in the shared Vector Set validation helper and remove the remaining standalone ad-hoc type assertions.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Remove duplicate Vector Set AOF test and explain recovery resume\n\nDrop VectorSetDisklessCheckpointDoesNotWriteToAof and retain the checkpoint-tail invariant test. Explain why re-enabling the injection flag resumes ResetAndWait rather than injecting another failure.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n* Use the fixture timeout for diskless snapshot arrival\n\nReplace the independent 30-second pause-arrival deadline with the existing 15-second fixture timeout.\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f\n\n---------\n\nCo-authored-by: Tiago Napoli <tiagonapoli@microsoft.com>\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCopilot-Session: 788da8c4-9305-4866-8d3b-060d62113a0f",
-          "timestamp": "2026-10-15T19:05:26-07:00",
-          "tree_id": "e68b61fe5f67f9ece08573147ce6c60bbe28d097",
-          "url": "https://github.com/microsoft/garnet/commit/48d6d6adf19ea320319b77faf7a7a58e6296dad8"
-        },
-        "date": 1792116546502,
-        "tool": "benchmarkdotnet",
-        "benches": [
-          {
-            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: AAD)",
-            "value": 91383.40071614583,
-            "unit": "ns",
-            "range": "± 86.72604487380352"
-          },
-          {
-            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: ACL)",
-            "value": 43104.084716796875,
-            "unit": "ns",
-            "range": "± 29.16663207590455"
-          },
-          {
-            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: AOF)",
-            "value": 116148.9150766226,
-            "unit": "ns",
-            "range": "± 123.70939140921965"
-          },
-          {
-            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: None)",
-            "value": 86630.33821614583,
-            "unit": "ns",
-            "range": "± 428.812973093759"
-          }
-        ]
-      },
-      {
-        "commit": {
-          "author": {
             "email": "jack@metajack.im",
             "name": "Jack Moffitt",
             "username": "metajack"
@@ -737899,6 +737851,54 @@ window.BENCHMARK_DATA = {
             "value": 90520.02762545072,
             "unit": "ns",
             "range": "± 117.76075097623571"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kmontrose@microsoft.com",
+            "name": "kevin-montrose",
+            "username": "kevin-montrose"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a76861365c55ca66b76c53ca11b1f766b668e953",
+          "message": "bump to 2.2.7 (#2356)",
+          "timestamp": "2026-11-04T13:40:23-08:00",
+          "tree_id": "266f026de284a96331e45c5b9d2850f635230d3e",
+          "url": "https://github.com/microsoft/garnet/commit/a76861365c55ca66b76c53ca11b1f766b668e953"
+        },
+        "date": 1793828631208,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: AAD)",
+            "value": 92589.2566763071,
+            "unit": "ns",
+            "range": "± 441.1905876878328"
+          },
+          {
+            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: ACL)",
+            "value": 44091.2997000558,
+            "unit": "ns",
+            "range": "± 24.02441793537443"
+          },
+          {
+            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: AOF)",
+            "value": 119706.84994070871,
+            "unit": "ns",
+            "range": "± 236.65823809300488"
+          },
+          {
+            "name": "BDN.benchmark.Operations.TxnOperations.MultiExec(Params: None)",
+            "value": 87434.91895470253,
+            "unit": "ns",
+            "range": "± 105.46349840057715"
           }
         ]
       }
